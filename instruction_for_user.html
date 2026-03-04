@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инструкция для Пользователя - Менеджер записей</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #212529;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        /* Навигация */
+        .nav-container {
+            background: #343a40;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+            border-right: 1px solid #495057;
+        }
+        
+        .nav-link:hover {
+            background: #495057;
+        }
+        
+        .nav-link.active {
+            background: #28a745;
+        }
+        
+        .subnav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #343a40;
+            min-width: 250px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            list-style: none;
+            padding: 0;
+        }
+        
+        .nav-item:hover .subnav {
+            display: block;
+        }
+        
+        .subnav-link {
+            display: block;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #495057;
+        }
+        
+        .subnav-link:hover {
+            background: #495057;
+        }
+        
+        .subnav-link:last-child {
+            border-bottom: none;
+        }
+        
+        /* Кнопка "Наверх" */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #28a745;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .back-to-top:hover {
+            background: #218838;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        /* Содержание */
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .toc h2 {
+            color: #343a40;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .toc-section {
+            background: white;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .toc-section h3 {
+            color: #28a745;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .toc-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .toc-section li {
+            margin-bottom: 8px;
+        }
+        
+        .toc-section a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .toc-section a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+        
+        /* Заголовки разделов */
+        .section {
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+        
+        .section h2 {
+            color: #343a40;
+            font-size: 28px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #28a745;
+        }
+        
+        .section h3 {
+            color: #495057;
+            font-size: 22px;
+            margin: 25px 0 15px;
+            padding-left: 10px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .section h4 {
+            color: #6c757d;
+            font-size: 18px;
+            margin: 20px 0 10px;
+        }
+        
+        /* Карточки функций */
+        .feature-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h4 {
+            color: #28a745;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .feature-card p {
+            margin-bottom: 10px;
+        }
+        
+        .feature-card ul, .feature-card ol {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .feature-card li {
+            margin-bottom: 5px;
+        }
+        
+        /* Подсказки */
+        .tip {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #155724;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #856404;
+        }
+        
+        .note {
+            background: #e2f0f9;
+            border: 1px solid #b8daff;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #004085;
+        }
+        
+        /* Код и комбинации клавиш */
+        .key {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #495057;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 5px;
+        }
+        
+        .badge-user {
+            background: #28a745;
+            color: white;
+        }
+        
+        /* Таблицы */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .table th {
+            background: #343a40;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .table td {
+            padding: 10px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        /* Скриншоты (заглушки) */
+        .screenshot {
+            background: #e9ecef;
+            border: 2px dashed #6c757d;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+            }
+            
+            .nav-link {
+                border-right: none;
+                border-bottom: 1px solid #495057;
+            }
+            
+            .subnav {
+                position: static;
+                box-shadow: none;
+                padding-left: 20px;
+            }
+            
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .back-to-top {
+                bottom: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Навигация -->
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#intro" class="nav-link">Введение</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#auth" class="nav-link">Авторизация</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tabs" class="nav-link">Вкладки</a>
+                    <ul class="subnav">
+                        <li><a href="#tabs-view" class="subnav-link">Просмотр вкладок</a></li>
+                        <li><a href="#tabs-create" class="subnav-link">Создание вкладок</a></li>
+                        <li><a href="#tabs-edit" class="subnav-link">Редактирование своих вкладок</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#records" class="nav-link">Записи</a>
+                    <ul class="subnav">
+                        <li><a href="#records-create" class="subnav-link">Создание записей</a></li>
+                        <li><a href="#records-edit" class="subnav-link">Редактирование</a></li>
+                        <li><a href="#records-delete" class="subnav-link">Удаление</a></li>
+                        <li><a href="#records-restore" class="subnav-link">Восстановление</a></li>
+                        <li><a href="#records-status" class="subnav-link">Статусы</a></li>
+                        <li><a href="#records-colors" class="subnav-link">Цвета записей</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#filters" class="nav-link">Фильтры</a>
+                    <ul class="subnav">
+                        <li><a href="#filters-author" class="subnav-link">По автору</a></li>
+                        <li><a href="#filters-title" class="subnav-link">По заголовку</a></li>
+                        <li><a href="#filters-system" class="subnav-link">По системе</a></li>
+                        <li><a href="#filters-object" class="subnav-link">По объекту</a></li>
+                        <li><a href="#filters-search" class="subnav-link">Поиск</a></li>
+                        <li><a href="#filters-status" class="subnav-link">По статусу</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#files" class="nav-link">Файлы</a>
+                    <ul class="subnav">
+                        <li><a href="#files-upload" class="subnav-link">Загрузка файлов</a></li>
+                        <li><a href="#files-view" class="subnav-link">Просмотр</a></li>
+                        <li><a href="#files-delete" class="subnav-link">Удаление своих файлов</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#comments" class="nav-link">Комментарии</a>
+                    <ul class="subnav">
+                        <li><a href="#comments-add" class="subnav-link">Добавление</a></li>
+                        <li><a href="#comments-view" class="subnav-link">Просмотр</a></li>
+                        <li><a href="#comments-delete" class="subnav-link">Удаление своих комментариев</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#profile" class="nav-link">Профиль</a>
+                    <ul class="subnav">
+                        <li><a href="#profile-password" class="subnav-link">Смена пароля</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#export" class="nav-link">Экспорт</a>
+                    <ul class="subnav">
+                        <li><a href="#export-excel" class="subnav-link">Excel</a></li>
+                        <li><a href="#export-html" class="subnav-link">HTML</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#hotkeys" class="nav-link">Горячие клавиши</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Содержание -->
+        <div class="toc">
+            <h2>📋 Содержание инструкции (для Пользователя)</h2>
+            <div class="toc-grid">
+                <div class="toc-section">
+                    <h3>🔐 Авторизация</h3>
+                    <ul>
+                        <li><a href="#auth-login">Вход в систему</a></li>
+                        <li><a href="#auth-password">Смена пароля</a></li>
+                        <li><a href="#auth-logout">Выход</a></li>
+                    </ul>
+                </div>
+                <div class="toc-section">
+                    <h3>📑 Работа с вкладками</h3>
+                    <ul>
+                        <li><a href="#tabs-view">Доступные вкладки</a></li>
+                        <li><a href="#tabs-create">Создание вкладок</a></li>
+                        <li><a href="#tabs-edit">Редактирование своих вкладок</a></li>
+                    </ul>
+                </div>
+                <div class="toc-section">
+                    <h3>📝 Управление записями</h3>
+                    <ul>
+                        <li><a href="#records-create">Создание</a></li>
+                        <li><a href="#records-edit">Редактирование</a></li>
+                        <li><a href="#records-delete">Удаление</a></li>
+                        <li><a href="#records-restore">Восстановление из корзины</a></li>
+                        <li><a href="#records-status">Статусы</a></li>
+                        <li><a href="#records-colors">Цвета</a></li>
+                    </ul>
+                </div>
+                <div class="toc-section">
+                    <h3>🔍 Фильтры</h3>
+                    <ul>
+                        <li><a href="#filters-author">По автору</a></li>
+                        <li><a href="#filters-title">По заголовку</a></li>
+                        <li><a href="#filters-system">По системе</a></li>
+                        <li><a href="#filters-object">По объекту</a></li>
+                        <li><a href="#filters-search">Поиск</a></li>
+                        <li><a href="#filters-status">По статусу</a></li>
+                    </ul>
+                </div>
+                <div class="toc-section">
+                    <h3>📎 Файлы</h3>
+                    <ul>
+                        <li><a href="#files-upload">Загрузка</a></li>
+                        <li><a href="#files-view">Просмотр</a></li>
+                        <li><a href="#files-delete">Удаление</a></li>
+                    </ul>
+                </div>
+                <div class="toc-section">
+                    <h3>💬 Комментарии</h3>
+                    <ul>
+                        <li><a href="#comments-add">Добавление</a></li>
+                        <li><a href="#comments-view">Просмотр</a></li>
+                        <li><a href="#comments-delete">Удаление</a></li>
+                    </ul>
+                </div>
+                <div class="toc-section">
+                    <h3>👤 Профиль</h3>
+                    <ul>
+                        <li><a href="#profile-password">Смена пароля</a></li>
+                    </ul>
+                </div>
+                <div class="toc-section">
+                    <h3>📊 Экспорт</h3>
+                    <ul>
+                        <li><a href="#export-excel">Экспорт в Excel</a></li>
+                        <li><a href="#export-html">Экспорт в HTML</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Введение -->
+        <section id="intro" class="section">
+            <h2>🌟 Введение</h2>
+            <div class="feature-card">
+                <p><strong>Менеджер записей</strong> - это система для ведения задач, заметок и документов с удобной системой фильтрации и совместной работы.</p>
+                
+                <div class="tip">
+                    <strong>👤 Ваша роль:</strong> Вы обычный пользователь. Ваши возможности определяются правами, которые выдал администратор.
+                </div>
+
+                <h4>Ваши возможности:</h4>
+                <ul>
+                    <li>📝 Создание и управление записями</li>
+                    <li>🎨 Цветовая маркировка записей</li>
+                    <li>📎 Прикрепление файлов к записям</li>
+                    <li>💬 Комментирование</li>
+                    <li>🔍 Использование фильтров</li>
+                    <li>📊 Экспорт данных</li>
+                    <li>📑 Создание своих вкладок (если есть право)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Авторизация -->
+        <section id="auth" class="section">
+            <h2>🔐 Авторизация</h2>
+            
+            <div id="auth-login" class="feature-card">
+                <h4>Вход в систему</h4>
+                <ol>
+                    <li>На странице входа введите ваш логин (выдан администратором)</li>
+                    <li>Введите ваш пароль</li>
+                    <li>Нажмите кнопку "Войти"</li>
+                </ol>
+                <p>Система запомнит ваш логин для следующего входа.</p>
+            </div>
+
+            <div id="auth-password" class="feature-card">
+                <h4>Смена пароля</h4>
+                <ol>
+                    <li>Нажмите кнопку <span class="key">🔑</span> рядом с вашим именем</li>
+                    <li>Введите текущий пароль</li>
+                    <li>Введите новый пароль</li>
+                    <li>Подтвердите новый пароль</li>
+                    <li>Нажмите "Сохранить"</li>
+                </ol>
+                <div class="warning">
+                    <strong>Важно:</strong> Пароль нельзя восстановить. Если забудете - обратитесь к администратору.
+                </div>
+            </div>
+
+            <div id="auth-logout" class="feature-card">
+                <h4>Выход из системы</h4>
+                <p>Нажмите кнопку <span class="key">🚪 Выйти</span> в правом верхнем углу.</p>
+            </div>
+        </section>
+
+        <!-- Работа с вкладками -->
+        <section id="tabs" class="section">
+            <h2>📑 Работа с вкладками</h2>
+            
+            <div id="tabs-view" class="feature-card">
+                <h4>Доступные вкладки</h4>
+                <p>В верхней части страницы вы видите вкладки, к которым у вас есть доступ:</p>
+                <ul>
+                    <li><strong>Все записи</strong> - все записи из доступных вам вкладок</li>
+                    <li><strong>Пользовательские вкладки</strong> - созданные вами или другими пользователями</li>
+                    <li><strong>Корзина</strong> - удаленные вами записи (или все, если вы администратор)</li>
+                </ul>
+                <p>Цифра на вкладке показывает количество непрочитанных записей.</p>
+            </div>
+
+            <div id="tabs-create" class="feature-card">
+                <h4>Создание новой вкладки</h4>
+                <p><em>Доступно, если у вас есть право "Создание вкладок".</em></p>
+                <ol>
+                    <li>Нажмите кнопку <span class="key">➕ Вкладка</span></li>
+                    <li>Введите название вкладки</li>
+                    <li>Выберите цвет из палитры</li>
+                    <li>Настройте права доступа для других пользователей</li>
+                    <li>Нажмите "Сохранить"</li>
+                </ol>
+                <div class="note">
+                    <strong>Важно:</strong> Создатель вкладки всегда имеет к ней полный доступ.
+                </div>
+            </div>
+
+            <div id="tabs-edit" class="feature-card">
+                <h4>Редактирование своих вкладок</h4>
+                <p>Вы можете редактировать только те вкладки, которые создали сами.</p>
+                <ol>
+                    <li>Нажмите на иконку <span class="key">⚙️</span> на своей вкладке</li>
+                    <li>Измените название, цвет или права доступа</li>
+                    <li>Нажмите "Сохранить"</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Управление записями -->
+        <section id="records" class="section">
+            <h2>📝 Управление записями</h2>
+            
+            <div id="records-create" class="feature-card">
+                <h4>Создание новой записи</h4>
+                <ol>
+                    <li>Выберите вкладку, в которую хотите добавить запись</li>
+                    <li>Нажмите кнопку <span class="key">➕ Добавить</span></li>
+                    <li>Заполните поля (система и объект могут быть пустыми):</li>
+                </ol>
+                
+                <h5>Поля ввода с автозаполнением:</h5>
+                <ul>
+                    <li><strong>Заголовок</strong> - можно выбрать из списка или создать свой (выберите "✏️ Свой заголовок")</li>
+                    <li><strong>Система</strong> - можно выбрать существующую или создать свою</li>
+                    <li><strong>Объект</strong> - можно выбрать существующий или создать свой</li>
+                    <li><strong>Описание</strong> - основной текст записи</li>
+                    <li><strong>Цвет</strong> - выберите цвет из палитры</li>
+                </ul>
+                
+                <div class="tip">
+                    <p><strong>Как удалить созданный вами элемент:</strong> Выберите его в списке и нажмите кнопку <span class="key">🗑️</span> справа. Стандартные элементы (Задача, Сообщение и т.д.) удалить нельзя.</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Прилипание значений:</strong> Система запоминает последние выбранные вами заголовок, систему, объект и цвет. При следующем создании записи они будут подставлены автоматически.</p>
+                </div>
+            </div>
+
+            <div id="records-edit" class="feature-card">
+                <h4>Редактирование записи</h4>
+                <p>Вы можете редактировать:</p>
+                <ul>
+                    <li><strong>Свои записи</strong> - всегда (если есть право на редактирование)</li>
+                    <li><strong>Чужие записи</strong> - только если администратор дал право редактировать все записи</li>
+                </ul>
+                <ol>
+                    <li>Нажмите кнопку <span class="key">✏️</span> в строке записи</li>
+                    <li>Внесите изменения</li>
+                    <li>Нажмите "Сохранить"</li>
+                </ol>
+            </div>
+
+            <div id="records-delete" class="feature-card">
+                <h4>Удаление записи</h4>
+                <p>Вы можете удалять:</p>
+                <ul>
+                    <li><strong>Свои записи</strong> - всегда (если есть право на удаление)</li>
+                    <li><strong>Чужие записи</strong> - только если есть право удалять все записи</li>
+                </ul>
+                <ol>
+                    <li>Нажмите кнопку <span class="key">🗑️</span> в строке записи</li>
+                    <li>Подтвердите удаление</li>
+                </ol>
+                <p>Запись перемещается во вкладку "Корзина".</p>
+            </div>
+
+            <div id="records-restore" class="feature-card">
+                <h4>Восстановление записи из корзины</h4>
+                <p>Вы можете восстановить только свои удаленные записи (администратор может любые).</p>
+                <ol>
+                    <li>Перейдите во вкладку <span class="key">🗑️ Корзина</span></li>
+                    <li>Найдите свою удаленную запись</li>
+                    <li>Нажмите кнопку <span class="key">♻️</span></li>
+                    <li>Выберите способ:
+                        <ul>
+                            <li><strong>ОК</strong> - восстановить как есть (с оригинальной датой)</li>
+                            <li><strong>Отмена</strong> - восстановить как новую (с текущей датой)</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div id="records-status" class="feature-card">
+                <h4>Управление статусами</h4>
+                <p>У каждой записи есть два чекбокса в колонке "ДАТЫ / СТАТУС":</p>
+                <ul>
+                    <li><strong>✓ Выполнено</strong> - отметьте, когда задача выполнена (запись становится зеленой)</li>
+                    <li><strong>⭐ Актуально</strong> - показывает, актуальна ли запись сейчас</li>
+                </ul>
+                <p>Изменять статусы можно только у записей, к которым у вас есть доступ.</p>
+            </div>
+
+            <div id="records-colors" class="feature-card">
+                <h4>Цветовая маркировка</h4>
+                <p>При создании записи вы можете выбрать один из 48 цветов (4 ряда по 12 цветов разной насыщенности).</p>
+                <ul>
+                    <li>Ряд 1: Светлые пастельные тона</li>
+                    <li>Ряд 2: Средние цвета (40% насыщенности)</li>
+                    <li>Ряд 3: Яркие цвета (70% насыщенности)</li>
+                    <li>Ряд 4: Насыщенные цвета (90% насыщенности)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Фильтры -->
+        <section id="filters" class="section">
+            <h2>🔍 Система фильтров</h2>
+            
+            <div class="feature-card">
+                <p>Фильтры расположены под вкладками. Они помогают быстро найти нужные записи.</p>
+                
+                <div id="filters-author">
+                    <h4>👤 По автору</h4>
+                    <ul>
+                        <li><strong>Все авторы</strong> - показывать все записи</li>
+                        <li><strong>Только мои</strong> - только ваши записи</li>
+                        <li><strong>Только чужие</strong> - только записи других пользователей</li>
+                    </ul>
+                </div>
+
+                <div id="filters-title">
+                    <h4>📌 По заголовку</h4>
+                    <p>Выберите конкретный заголовок, чтобы увидеть только записи с ним.</p>
+                </div>
+
+                <div id="filters-system">
+                    <h4>⚙️ По системе</h4>
+                    <p>Отфильтруйте записи по полю "Система".</p>
+                </div>
+
+                <div id="filters-object">
+                    <h4>📦 По объекту</h4>
+                    <p>Отфильтруйте записи по полю "Объект".</p>
+                </div>
+
+                <div id="filters-search">
+                    <h4>🔍 Поиск по описанию</h4>
+                    <p>Введите текст для поиска в описании записей. Нажмите Enter для применения.</p>
+                </div>
+
+                <div id="filters-status">
+                    <h4>⚡ По статусу</h4>
+                    <ul>
+                        <li><strong>Актуальные</strong> - только актуальные записи</li>
+                        <li><strong>Не актуальные</strong> - только неактуальные</li>
+                        <li><strong>Выполненные</strong> - только выполненные</li>
+                    </ul>
+                </div>
+
+                <div id="filters-read">
+                    <h4>👁️ По прочтению</h4>
+                    <ul>
+                        <li><strong>Непрочитанные</strong> - записи, которые вы еще не открывали</li>
+                        <li><strong>Прочитанные</strong> - уже просмотренные вами</li>
+                    </ul>
+                </div>
+
+                <div id="filters-files">
+                    <h4>📎 По файлам</h4>
+                    <ul>
+                        <li><strong>С файлами</strong> - записи с прикрепленными файлами</li>
+                        <li><strong>Без файлов</strong> - записи без файлов</li>
+                    </ul>
+                </div>
+
+                <div class="tip">
+                    <p><strong>Активные фильтры</strong> отображаются в виде цветных значков. Нажмите крестик на значке, чтобы убрать фильтр. Кнопка <span class="key">🔄 Сброс</span> убирает все фильтры сразу.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Файлы -->
+        <section id="files" class="section">
+            <h2>📎 Управление файлами</h2>
+            
+            <div id="files-upload" class="feature-card">
+                <h4>Загрузка файлов</h4>
+                <p>Вы можете прикреплять файлы только к своим записям (или к любым, если есть право).</p>
+                <ol>
+                    <li>Откройте запись (нажмите на зеленый индикатор файлов или кнопку 📎)</li>
+                    <li>Перетащите файлы в область загрузки или кликните для выбора</li>
+                    <li>Дождитесь завершения загрузки</li>
+                </ol>
+                <div class="note">
+                    <strong>Ограничения:</strong> Максимальный размер файла - 500MB. Можно загружать любые типы файлов.
+                </div>
+            </div>
+
+            <div id="files-view" class="feature-card">
+                <h4>Просмотр файлов</h4>
+                <ol>
+                    <li>Кликните на счетчик файлов <span class="key">📎 N</span> в записи</li>
+                    <li>В окне вы увидите список файлов с информацией:
+                        <ul>
+                            <li>Имя файла</li>
+                            <li>Дата загрузки</li>
+                            <li>Кто загрузил</li>
+                            <li>Размер</li>
+                        </ul>
+                    </li>
+                    <li>Для изображений доступен предпросмотр (кликните на картинку для увеличения)</li>
+                    <li>Нажмите <span class="key">📥 Скачать</span> для загрузки файла</li>
+                </ol>
+            </div>
+
+            <div id="files-delete" class="feature-card">
+                <h4>Удаление файлов</h4>
+                <p>Вы можете удалять только свои файлы (администратор может любые).</p>
+                <ol>
+                    <li>Откройте окно с файлами записи</li>
+                    <li>На вкладке <span class="key">📎 Активные</span> найдите нужный файл</li>
+                    <li>Нажмите <span class="key">🗑️ Удалить</span></li>
+                    <li>Подтвердите удаление</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Комментарии -->
+        <section id="comments" class="section">
+            <h2>💬 Комментарии</h2>
+            
+            <div id="comments-add" class="feature-card">
+                <h4>Добавление комментария</h4>
+                <ol>
+                    <li>Нажмите кнопку <span class="key">💬</span> в строке записи</li>
+                    <li>Напишите текст комментария</li>
+                    <li>Нажмите <span class="key">💬 Отправить</span></li>
+                </ol>
+                <p>Вы можете комментировать записи, к которым у вас есть доступ.</p>
+            </div>
+
+            <div id="comments-view" class="feature-card">
+                <h4>Просмотр комментариев</h4>
+                <p>Количество комментариев отображается под описанием записи. Кликните на этот блок, чтобы открыть окно со всеми комментариями.</p>
+            </div>
+
+            <div id="comments-delete" class="feature-card">
+                <h4>Удаление комментариев</h4>
+                <p>Вы можете удалять только свои комментарии (администратор может любые).</p>
+                <ol>
+                    <li>Откройте окно с комментариями</li>
+                    <li>Найдите свой комментарий</li>
+                    <li>Нажмите <span class="key">🗑️</span> рядом с ним</li>
+                    <li>Подтвердите удаление</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Профиль -->
+        <section id="profile" class="section">
+            <h2>👤 Управление профилем</h2>
+            
+            <div id="profile-password" class="feature-card">
+                <h4>Смена пароля</h4>
+                <ol>
+                    <li>Нажмите кнопку <span class="key">🔑</span> рядом с вашим именем в верхней панели</li>
+                    <li>Введите текущий пароль</li>
+                    <li>Введите новый пароль (не менее 1 символа)</li>
+                    <li>Подтвердите новый пароль</li>
+                    <li>Нажмите "Сохранить"</li>
+                </ol>
+                <div class="warning">
+                    <strong>Важно:</strong> Записывайте новый пароль. При утере обращайтесь к администратору.
+                </div>
+            </div>
+        </section>
+
+        <!-- Экспорт -->
+        <section id="export" class="section">
+            <h2>📊 Экспорт данных</h2>
+            
+            <div id="export-excel" class="feature-card">
+                <h4>Экспорт в Excel</h4>
+                <ol>
+                    <li>Нажмите кнопку <span class="key">📊 Excel</span></li>
+                    <li>Файл будет автоматически скачан</li>
+                </ol>
+                <p>В экспорт попадут только записи, соответствующие текущим фильтрам.</p>
+            </div>
+
+            <div id="export-html" class="feature-card">
+                <h4>Экспорт в HTML (для печати)</h4>
+                <ol>
+                    <li>Нажмите кнопку <span class="key">🌐 HTML</span></li>
+                    <li>Откроется новая вкладка с красиво оформленным списком записей</li>
+                    <li>Используйте <span class="key">Ctrl+P</span> для печати</li>
+                </ol>
+                <p>HTML экспорт также учитывает все примененные фильтры.</p>
+            </div>
+        </section>
+
+        <!-- Горячие клавиши -->
+        <section id="hotkeys" class="section">
+            <h2>⌨️ Горячие клавиши</h2>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Клавиша</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="key">Esc</span></td>
+                        <td>Закрыть любое открытое окно</td>
+                    </tr>
+                    <tr>
+                        <td><span class="key">Enter</span></td>
+                        <td>Применить поиск (когда курсор в поле поиска)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Кнопка "Наверх" -->
+        <a href="#" class="back-to-top" title="Наверх">↑</a>
+    </div>
+</body>
+</html>
