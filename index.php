@@ -143,6 +143,7 @@ class Storage {
             'id' => 1,
             'username' => 'admin',
             'fullname' => 'Главный Администратор',
+            //Пароль для администратора можно поменять на 'admin'
             'password' => md5('1'),
             'role' => 'admin',
             'client_id' => $client_id,
