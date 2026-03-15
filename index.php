@@ -836,7 +836,7 @@ class Storage {
         }
         return null;
     }
-    // Объектыверсия 2
+    // Объекты версия 2
     public function getItemsByTab($tab_id, $user = null, $filters = []) {
         $tab = $this->getTab($tab_id);
         
