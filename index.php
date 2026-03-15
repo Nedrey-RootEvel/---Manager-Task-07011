@@ -16,7 +16,7 @@ class Storage {
     private $users_data = [];
     private $replies_data = [];
     private $files_index = [];
-    
+     
     private $colors = [
         // Светлые (16 цветов)
         '#FFFFFF', '#FFD6D6', '#D6FFD6', '#D6D6FF', '#FFE6CC', '#E6D6FF',
@@ -835,7 +835,7 @@ class Storage {
         }
         return null;
     }
-    
+    // Объектыверсия 2
     public function getItemsByTab($tab_id, $user = null, $filters = []) {
         $tab = $this->getTab($tab_id);
         
